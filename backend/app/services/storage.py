@@ -10,7 +10,10 @@ s3_client = boto3.client(
 )
 
 def upload_image_to_s3(file_path: str, original_filename: str) -> str:
-    """Upload a local image file to S3 and return the public URL."""
+    """Upload a local image file to S3 and return the public URL. Skips if AWS not configured."""
+    if not settings.AWS_ACCESS_KEY_ID or not settings.AWS_SECRET_ACCESS_KEY:
+        return f"/local/scans/{uuid.uuid4()}.jpg"
+
     ext = original_filename.rsplit(".", 1)[-1] if "." in original_filename else "jpg"
     key = f"faces/{uuid.uuid4()}.{ext}"
 

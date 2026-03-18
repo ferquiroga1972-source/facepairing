@@ -2,12 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.routers import auth, face, matching, payments
-from app.database import engine
-from app.models import user, scan, match
+from app.database import engine, Base
+import app.models  # registers all models with SQLAlchemy
 
-user.Base.metadata.create_all(bind=engine)
-scan.Base.metadata.create_all(bind=engine)
-match.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="FacePairing API", version="1.0.0")
 

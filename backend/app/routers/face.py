@@ -30,7 +30,10 @@ async def scan_face(
     try:
         attributes, embedding = analyze_face(tmp_path)
         diagnostic = generate_diagnostic(attributes)
-        image_url = upload_image_to_s3(tmp_path, file.filename or "face.jpg")
+        try:
+            image_url = upload_image_to_s3(tmp_path, file.filename or "face.jpg")
+        except Exception:
+            image_url = f"/local/scans/{os.path.basename(tmp_path)}"
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Face analysis failed: {str(e)}")
     finally:

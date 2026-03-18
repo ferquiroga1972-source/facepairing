@@ -19,15 +19,22 @@ def analyze_face(image_path: str) -> Tuple[Dict[str, Any], list]:
     if isinstance(result, list):
         result = result[0]
 
+    def to_python(v):
+        if isinstance(v, dict):
+            return {k: to_python(val) for k, val in v.items()}
+        if isinstance(v, (np.floating, np.integer)):
+            return v.item()
+        return v
+
     attributes = {
-        "age": result.get("age"),
+        "age": to_python(result.get("age")),
         "gender": result.get("dominant_gender"),
         "emotion": result.get("dominant_emotion"),
-        "emotions": result.get("emotion", {}),
+        "emotions": to_python(result.get("emotion", {})),
         "race": result.get("dominant_race"),
-        "races": result.get("race", {}),
-        "face_confidence": result.get("face_confidence"),
-        "region": result.get("region", {}),
+        "races": to_python(result.get("race", {})),
+        "face_confidence": to_python(result.get("face_confidence")),
+        "region": to_python(result.get("region", {})),
     }
 
     # Extract face embedding for matching

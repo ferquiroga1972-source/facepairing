@@ -8,24 +8,24 @@ def generate_diagnostic(face_attributes: Dict[str, Any]) -> str:
     """
     client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
 
-    prompt = f"""You are an expert in physiognomy and personality analysis. Based on the following facial analysis data, provide a detailed personality diagnostic report.
+    prompt = f"""You are a creative personality insight generator for a fun social app called FacePairing. Based on someone's facial expression data captured from a photo, generate an engaging, positive, and uplifting personality profile. This is entertainment-focused — like a fun horoscope or personality quiz result.
 
-Facial Analysis Data:
-- Estimated Age: {face_attributes.get('age')}
+Facial Expression & Appearance Data:
+- Apparent Age: {face_attributes.get('age')}
 - Gender Expression: {face_attributes.get('gender')}
-- Dominant Emotion: {face_attributes.get('emotion')}
-- Emotion Distribution: {face_attributes.get('emotions')}
-- Ethnic Background: {face_attributes.get('race')}
+- Dominant Expression: {face_attributes.get('emotion')}
+- Expression Breakdown: {face_attributes.get('emotions')}
+- Face Confidence Score: {face_attributes.get('face_confidence')}
 
-Based on physiognomy principles and facial feature analysis, provide:
-1. **Core Personality Traits** - Key personality characteristics suggested by facial features
-2. **Emotional Intelligence** - Emotional tendencies and awareness
-3. **Social Dynamics** - How this person likely interacts with others
-4. **Strengths** - Natural talents and positive traits
-5. **Growth Areas** - Potential areas for personal development
-6. **Compatible Personalities** - Types of people they harmonize best with
+Based on this snapshot, craft a fun and inspiring personality profile with these sections:
+1. **Your Vibe** - The overall energy and personality aura this person radiates
+2. **Emotional World** - How they experience and express emotions
+3. **Social Style** - How they connect and communicate with others
+4. **Hidden Strengths** - Unique talents and inner qualities they possess
+5. **Growth Journey** - Exciting personal development opportunities ahead
+6. **Your People** - The kinds of souls they connect with most deeply
 
-Keep the tone positive, insightful, and empowering. Base your analysis on established physiognomy principles."""
+Keep it warm, imaginative, empowering, and fun — like a personalized horoscope. Be specific and vivid, not generic."""
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
