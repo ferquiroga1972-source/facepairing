@@ -40,26 +40,31 @@ export default function FaceScanner({ onCapture }: Props) {
   }
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+    <div className="text-center">
+      {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
       {streaming ? (
         <div>
-          <video ref={videoRef} style={{ width: '100%', maxWidth: '480px', borderRadius: '12px' }} />
-          <canvas ref={canvasRef} style={{ display: 'none' }} />
-          <br />
-          <button onClick={capture} style={{ marginTop: '1rem', background: '#a78bfa', color: '#fff', border: 'none', padding: '0.75rem 2rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem' }}>
+          <video ref={videoRef} className="w-full max-w-md mx-auto rounded-xl" />
+          <canvas ref={canvasRef} className="hidden" />
+          <button onClick={capture} className="btn-primary mt-6 px-10 py-3">
             Capture Photo
           </button>
         </div>
       ) : (
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button onClick={startCamera} style={{ background: '#a78bfa', color: '#fff', border: 'none', padding: '0.75rem 2rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem' }}>
-            Use Camera
-          </button>
-          <label style={{ background: '#374151', color: '#fff', padding: '0.75rem 2rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem' }}>
-            Upload Photo
-            <input type="file" accept="image/*" onChange={handleFileInput} style={{ display: 'none' }} />
-          </label>
+        <div className="flex flex-col items-center gap-6 py-6">
+          <div className="w-32 h-32 rounded-full bg-violet-400/10 border-2 border-dashed border-violet-400/40 flex items-center justify-center text-5xl">
+            🤳
+          </div>
+          <p className="text-gray-400 text-sm max-w-xs">Position your face clearly in the frame for best results</p>
+          <div className="flex gap-4 flex-wrap justify-center">
+            <button onClick={startCamera} className="btn-primary px-8 py-3">
+              Use Camera
+            </button>
+            <label className="btn-ghost px-8 py-3 cursor-pointer">
+              Upload Photo
+              <input type="file" accept="image/*" onChange={handleFileInput} className="hidden" />
+            </label>
+          </div>
         </div>
       )}
     </div>

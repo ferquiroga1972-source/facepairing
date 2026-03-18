@@ -6,17 +6,18 @@ interface Props {
 
 export default function MatchCard({ userId, fullName, similarityScore }: Props) {
   const percent = Math.round(similarityScore * 100)
+  const initial = (fullName || 'U')[0].toUpperCase()
 
   return (
-    <div style={{ background: '#1e1e3f', borderRadius: '12px', padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', border: '1px solid #374151' }}>
-      <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#a78bfa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', fontWeight: 700 }}>
-        {(fullName || 'U')[0].toUpperCase()}
+    <div className="card flex items-center gap-4 hover:border-violet-400/50 transition-colors">
+      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-400 to-blue-400 flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
+        {initial}
       </div>
-      <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, fontSize: '1rem' }}>{fullName || `User #${userId}`}</div>
-        <div style={{ color: '#a78bfa', fontSize: '0.9rem' }}>{percent}% facial similarity</div>
+      <div className="flex-1">
+        <div className="font-semibold text-white">{fullName || `User #${userId}`}</div>
+        <div className="text-violet-400 text-sm mt-0.5">{percent}% facial similarity</div>
       </div>
-      <button style={{ background: '#a78bfa', color: '#fff', border: 'none', padding: '0.5rem 1.2rem', borderRadius: '8px', cursor: 'pointer' }}>
+      <button className="btn-primary text-sm px-4 py-2">
         Connect
       </button>
     </div>

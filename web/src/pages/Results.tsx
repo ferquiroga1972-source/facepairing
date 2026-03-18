@@ -33,39 +33,47 @@ export default function Results() {
 
   if (!result) return null
 
-  return (
-    <div style={{ maxWidth: '720px', margin: '3rem auto', padding: '2rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem', textAlign: 'center' }}>Your Personality Diagnostic</h1>
-      <p style={{ color: '#94a3b8', textAlign: 'center', marginBottom: '2rem' }}>Based on physiognomy analysis of your facial features</p>
+  const simpleAttrs = Object.entries(result.attributes).filter(([, v]) => typeof v === 'string' || typeof v === 'number')
 
-      <div style={{ background: '#1e1e3f', borderRadius: '12px', padding: '1.5rem', marginBottom: '1.5rem', border: '1px solid #374151' }}>
-        <h2 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Facial Attributes Detected</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-          {Object.entries(result.attributes)
-            .filter(([, v]) => typeof v === 'string' || typeof v === 'number')
-            .map(([k, v]) => (
-              <span key={k} style={{ background: '#374151', padding: '0.4rem 0.9rem', borderRadius: '20px', fontSize: '0.85rem' }}>
-                <strong>{k}:</strong> {String(v)}
-              </span>
-            ))}
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-bold mb-2">Your Personality Diagnostic</h1>
+        <p className="text-gray-400">Based on AI analysis of your facial features</p>
+      </div>
+
+      <div className="card mb-6">
+        <h2 className="text-violet-400 font-bold text-lg mb-4">Facial Attributes Detected</h2>
+        <div className="flex flex-wrap gap-2">
+          {simpleAttrs.map(([k, v]) => (
+            <span key={k} className="badge">
+              <span className="font-semibold capitalize">{k}:</span> {String(v)}
+            </span>
+          ))}
         </div>
       </div>
 
-      <div style={{ background: '#1e1e3f', borderRadius: '12px', padding: '1.5rem', marginBottom: '2rem', border: '1px solid #374151' }}>
-        <h2 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Personality Report</h2>
-        <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8, color: '#e2e8f0' }}>{result.diagnostic}</div>
+      <div className="card mb-8">
+        <h2 className="text-violet-400 font-bold text-lg mb-4">Personality Report</h2>
+        <div className="prose prose-invert max-w-none">
+          <div className="text-gray-200 leading-relaxed whitespace-pre-wrap text-sm">{result.diagnostic}</div>
+        </div>
       </div>
 
-      <div style={{ background: 'linear-gradient(135deg, #1e1e3f, #2d1b69)', borderRadius: '12px', padding: '2rem', textAlign: 'center', border: '1px solid #a78bfa' }}>
-        <h2 style={{ marginBottom: '0.5rem' }}>Find Your Face Matches</h2>
-        <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>Connect with people who share similar facial features and personality traits.</p>
+      <div className="card-glow text-center">
+        <div className="text-4xl mb-3">💜</div>
+        <h2 className="text-2xl font-bold mb-2">Find Your Face Matches</h2>
+        <p className="text-gray-400 mb-6 max-w-md mx-auto text-sm">
+          Connect with people who share similar facial features and personality traits. Upgrade to Premium to unlock matching.
+        </p>
         <button
           onClick={handleUpgrade}
           disabled={checkoutLoading}
-          style={{ background: 'linear-gradient(135deg, #a78bfa, #60a5fa)', color: '#fff', border: 'none', padding: '0.9rem 2.5rem', borderRadius: '10px', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}
+          className="btn-primary text-lg px-10 py-4"
         >
           {checkoutLoading ? 'Loading...' : 'Unlock Matching — $9.99/mo'}
         </button>
+        <p className="text-gray-500 text-xs mt-3">Cancel anytime</p>
       </div>
     </div>
   )

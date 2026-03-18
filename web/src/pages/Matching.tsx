@@ -16,29 +16,45 @@ export default function Matching() {
       .then(({ data }) => setMatches(data.matches))
       .catch((e) => {
         if (e?.response?.status === 401) navigate('/login')
-        else if (e?.response?.status === 403) setError('Premium subscription required. Please upgrade to access matches.')
+        else if (e?.response?.status === 403) setError('Premium subscription required.')
         else setError(e?.response?.data?.detail || 'Failed to load matches.')
       })
       .finally(() => setLoading(false))
   }, [navigate])
 
-  if (loading) return <div style={{ textAlign: 'center', padding: '4rem', color: '#a78bfa' }}>Loading matches...</div>
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 rounded-full border-4 border-violet-400 border-t-transparent animate-spin" />
+        <p className="text-violet-300">Loading matches...</p>
+      </div>
+    </div>
+  )
 
   return (
-    <div style={{ maxWidth: '680px', margin: '3rem auto', padding: '2rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>Your Face Matches</h1>
-      <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>People who share similar facial features and personality traits</p>
+    <div className="max-w-2xl mx-auto px-4 py-12">
+      <h1 className="text-4xl font-bold mb-2">Your Face Matches</h1>
+      <p className="text-gray-400 mb-8">People who share similar facial features and personality traits</p>
+
       {error ? (
-        <div style={{ background: '#1e1e3f', borderRadius: '12px', padding: '2rem', textAlign: 'center', border: '1px solid #f87171' }}>
-          <p style={{ color: '#f87171' }}>{error}</p>
-          <button onClick={() => navigate('/pricing')} style={{ marginTop: '1rem', background: '#a78bfa', color: '#fff', border: 'none', padding: '0.75rem 2rem', borderRadius: '8px', cursor: 'pointer' }}>
+        <div className="card-glow text-center py-12">
+          <div className="text-4xl mb-4">🔒</div>
+          <p className="text-gray-300 mb-6">{error}</p>
+          <button onClick={() => navigate('/pricing')} className="btn-primary px-8 py-3">
             Upgrade to Premium
           </button>
         </div>
       ) : matches.length === 0 ? (
-        <p style={{ color: '#94a3b8' }}>No matches found yet. Make sure you have scanned your face first.</p>
+        <div className="card text-center py-12">
+          <div className="text-4xl mb-4">👤</div>
+          <p className="text-gray-400">No matches found yet.</p>
+          <p className="text-gray-500 text-sm mt-2">Scan your face first to find matches.</p>
+          <button onClick={() => navigate('/scan')} className="btn-outline mt-6 px-8 py-3">
+            Scan My Face
+          </button>
+        </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div className="flex flex-col gap-4">
           {matches.map((m) => <MatchCard key={m.user_id} userId={m.user_id} fullName={m.full_name} similarityScore={m.similarity_score} />)}
         </div>
       )}

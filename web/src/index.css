@@ -1,10 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0f0f0f;
-  color: #f5f5f5;
+@layer base {
+  body {
+    @apply bg-[#0f0f0f] text-white antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-violet-400 to-blue-400 text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity cursor-pointer border-0 inline-block;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border-2 border-violet-400 text-violet-400 font-semibold px-6 py-3 rounded-xl hover:bg-violet-400 hover:text-white transition-all cursor-pointer inline-block;
+  }
+
+  .btn-ghost {
+    @apply bg-gray-700 text-white font-semibold px-6 py-3 rounded-xl hover:bg-gray-600 transition-colors cursor-pointer border-0 inline-block;
+  }
+
+  .card {
+    @apply bg-[#1e1e3f] border border-gray-700 rounded-2xl p-6;
+  }
+
+  .card-glow {
+    @apply bg-[#1e1e3f] border-2 border-violet-400 rounded-2xl p-6;
+    box-shadow: 0 0 30px rgba(167, 139, 250, 0.15);
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-700 bg-[#16163a] text-white placeholder-gray-500 focus:outline-none focus:border-violet-400 transition-colors;
+  }
+
+  .badge {
+    @apply bg-gray-700 text-sm px-3 py-1 rounded-full;
+  }
+
+  .gradient-text {
+    @apply font-extrabold;
+    background: linear-gradient(135deg, #a78bfa, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
